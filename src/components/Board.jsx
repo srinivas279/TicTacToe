@@ -1,30 +1,64 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Square from './Square'
-import "../styles/root.scss"
+
 
 const Board = () => {
+
+  const [board, setBoard]=useState( Array(9).fill(null));
+  const [isXNext,setIsXNext]=useState(false)
+
+  const handleOnClick=(position)=>{
+
+    if(board[position]){
+      return;
+    }
+    setBoard((prev)=>{           // callback fn receive previous value as argument
+      return prev.map((square,pos)=>{
+        if(pos===position){
+          return isXNext?"X":'O';
+        }
+        return square;
+        
+      });
+    }); 
+    setIsXNext(prev=>!prev)
+  };
+
+
+
+  const renderSquare=(position)=>{
+         return (
+         <Square 
+         value={board[position] }
+          onClick={()=>handleOnClick(position)}
+            
+         />)
+  }
+
   return (
     <div className="board ">
       <div className="board-row">
-        <Square value={1}/>
-        <Square value={2}/>
-        <Square value={3}/>
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
 
       <div className="board-row">
-        <Square value={4}/>
-        <Square value={5}/>
-        <Square value={6}/>
-      </div>
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>      
 
       <div className="board-row">
-        <Square value={7}/>
-        <Square value={8}/>
-        <Square value={9}/>
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
       </div>
 
     </div>
   )
 }
+
+console.log("In Board")
 
 export default Board

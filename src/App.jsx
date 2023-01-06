@@ -9,4 +9,6 @@ import Board from "./components/Board"
   </div>
 );
 
+console.log("In App")
+
 export default App;
