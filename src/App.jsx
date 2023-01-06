@@ -2,11 +2,11 @@ import React from "react";
 import Board from "./components/Board"
 
  const App = () => (
-  <>
-    <h1>Welcome to React Vite Micro App!</h1>
-    <p>hello Srinivas.</p>
+  <div className="app">
+    <h1> Tic Tac Toe</h1>
+    
     <Board/>
-  </>
+  </div>
 );
 
 export default App;
