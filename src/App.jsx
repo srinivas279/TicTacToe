@@ -4,28 +4,34 @@ import { calculateWinner } from "./winnerCal";
 
  const App = () =>{
 
-  const [board, setBoard]=useState( Array(9).fill(null));
-  const [isXNext,setIsXNext]=useState(false);
+  const [history, setHistory]=useState([{board: Array(9).fill(null),isXNext:true}]);
+  const [currentMove, setCurrentMove]=useState(0);
+  const current=history[currentMove]
 
-  const winner = calculateWinner(board);
+  const winner = calculateWinner(current.board);
 
-  const message= winner? `winner is ${winner}`: `Next Player is ${isXNext ? "X" : "O"}`
+  const message= winner? `winner is ${winner}`: `Next Player is ${current.isXNext ? "X" : "O"}`
 
   const handleOnClick=(position)=>{
 
-    if(board[position] || winner){
+    if(current.board[position] || winner){
       return;
     }
-    setBoard((prev)=>{           // callback fn receive previous value as argument
-      return prev.map((square,pos)=>{
+    setHistory((prev)=>{           // callback fn receive previous value as argument
+
+      const last=prev[prev.length-1]
+
+      const newBoard =  last.board.map((square,pos)=>{
         if(pos===position){
-          return isXNext?"X":'O';
+          return last.isXNext? "X":'O';
         }
         return square;
         
       });
+
+      return prev.concat({board:newBoard,isXNext:!last.isXNext})
     }); 
-    setIsXNext(prev=>!prev)
+    setCurrentMove(prev=>prev+1)
   };
 
 
@@ -34,7 +40,7 @@ import { calculateWinner } from "./winnerCal";
     <h1> Tic Tac Toe</h1>
     <h3>{message}</h3>
     
-    <Board handleOnClick={handleOnClick} board={board}/>
+    <Board handleOnClick={handleOnClick} board={current.board}/>
   </div>
 );
   }
