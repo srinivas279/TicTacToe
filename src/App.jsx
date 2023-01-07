@@ -1,10 +1,12 @@
 import React,{useState} from "react";
 import Board from "./components/Board"
 import { calculateWinner } from "./winnerCal";
+import History from "./components/History"
 
  const App = () =>{
 
   const [history, setHistory]=useState([{board: Array(9).fill(null),isXNext:true}]);
+ // console.log(history)
   const [currentMove, setCurrentMove]=useState(0);
   const current=history[currentMove]
 
@@ -34,6 +36,9 @@ import { calculateWinner } from "./winnerCal";
     setCurrentMove(prev=>prev+1)
   };
 
+const moveTo = (move)=>{
+        setCurrentMove(move)
+}
 
   return(
   <div className="app">
@@ -41,6 +46,7 @@ import { calculateWinner } from "./winnerCal";
     <h3>{message}</h3>
     
     <Board handleOnClick={handleOnClick} board={current.board}/>
+    <History history={history} moveTo={moveTo} currentMove={currentMove}/>
   </div>
 );
   }
