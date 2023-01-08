@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import Board from "./components/Board"
 import { calculateWinner } from "./winnerCal";
 import History from "./components/History"
+import StatusMessage from "./components/StatusMessage";
 
  const App = () =>{
 
@@ -12,7 +13,6 @@ import History from "./components/History"
 
   const winner = calculateWinner(current.board);
 
-  const message= winner? `winner is ${winner}`: `Next Player is ${current.isXNext ? "X" : "O"}`
 
   const handleOnClick=(position)=>{
 
@@ -43,7 +43,7 @@ const moveTo = (move)=>{
   return(
   <div className="app">
     <h1> Tic Tac Toe</h1>
-    <h3>{message}</h3>
+   <StatusMessage winner = {winner} current={current}/>
     
     <Board handleOnClick={handleOnClick} board={current.board}/>
     <History history={history} moveTo={moveTo} currentMove={currentMove}/>
