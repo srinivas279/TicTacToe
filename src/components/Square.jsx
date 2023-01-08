@@ -5,9 +5,11 @@ const Square = (props) => {
   return (
     <button 
     type="button" 
-    className='square'
+
      onClick={props.onClick}
-     style={{fontWeight: props.isWinningSquare ? 'bold':"normal"}} > {props.value} </button>
+     className={ `square ${props.isWinningSquare ? 'winning':' '}
+      ${props.value==='X'? 'text-green':'text-orange'}`}
+      > {props.value} </button>
   )
 }
 console.log("in square")
